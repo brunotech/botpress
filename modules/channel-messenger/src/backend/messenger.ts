@@ -305,12 +305,14 @@ export class MessengerClient {
     await this._callEndpoint('/messages', body)
   }
 
-  async sendTextMessage(senderId: string, message: string) {
+  async sendTextMessage(senderId: string, message: { [key: string]: any }) {
+    const { agent, preview, ...newMessage } = message
+
     const body = {
       recipient: {
         id: senderId
       },
-      message
+      message: newMessage
     }
 
     debugMessages('outgoing text message', { senderId, message, body })
